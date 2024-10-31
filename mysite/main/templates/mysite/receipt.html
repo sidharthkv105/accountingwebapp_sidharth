@@ -1,0 +1,42 @@
+<!-- templates/mysite/receipt.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Create Receipt</h1>
+    <!-- <p>Document Number: {{ form.document_number }}</p> -->
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            {{ form.date.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.date }}
+        </div>
+        <div>
+            {{ form.name.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.name }}
+        </div>
+        <div>
+            {{ form.batch.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.batch }}
+        </div>
+        <div>
+            {{ form.course.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.course }}
+        </div>
+        <div>
+            {{ form.description.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.description }}
+        </div>
+        <div>
+            {{ form.amount.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.amount }}
+        </div>
+        <div>
+            {{ form.gst_applicable.label_tag }}<span style="color: red;">*</span><br>
+            {{ form.gst_applicable }}
+        </div>
+        
+        <button type="submit">Generate Receipt</button>
+    </form>
+{% endblock %}

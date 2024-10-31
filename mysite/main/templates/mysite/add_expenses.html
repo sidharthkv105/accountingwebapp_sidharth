@@ -1,0 +1,57 @@
+<!-- templates/mysite/add_expense.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Add Expense</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            {{ form.date.label_tag }}<br>
+            {{ form.date }}  <!-- This will render the SelectDateWidget -->
+        </div>
+        <div>
+            {{ form.party.label_tag }}<br>
+            {{ form.party }}
+        </div>
+        <div>
+            {{ form.particulars.label_tag }}<br>
+            {{ form.particulars }}
+        </div>
+        <div>
+            {{ form.invoice_number.label_tag }}<br>
+            {{ form.invoice_number }}
+        </div>
+        <div>
+            {{ form.amount.label_tag }}<br>
+            {{ form.amount }}
+        </div>
+        <div>
+            {{ form.bank_or_cash.label_tag }}<br>
+            {{ form.bank_or_cash }}  <!-- This will render the ChoiceField -->
+        </div>        
+        <div>
+            {{ form.igst.label_tag }}<br>
+            {{ form.igst }}
+        </div>
+        <div>
+            {{ form.cgst.label_tag }}<br>
+            {{ form.cgst }}
+        </div>
+        <div>
+            {{ form.kgst.label_tag }}<br>
+            {{ form.kgst }}
+        </div>
+        <div>
+            {{ form.tds.label_tag }}<br>
+            {{ form.tds }}
+        </div>
+        <div>
+            {{ form.total.label_tag }}<br>
+            {{ form.total }}
+        </div>
+        
+        <button type="submit">Add Expense</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Accounting Web Application{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* Basic CSS for layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Stack topbar and sidebar vertically */
+        }
+
+        .topbar {
+            background-color: #27374D; /* Topbar background color */
+            color: white;
+            padding: 10px; /* Topbar padding */
+            display: flex; /* Use flexbox for layout */
+            align-items: center; /* Center items vertically */
+            position: fixed; /* Fixed position at the top */
+            width: 100%; /* Full width */
+            z-index: 1000; /* On top of other content */
+            font-size: 11px; /* Adjusted font size */
+        }
+
+        .topbar h1 {
+            margin: 0; /* Remove default margin */
+            text-align: center; /* Center text within its own area */
+            flex-grow: 1; /* Allow the heading to take up remaining space */
+            text-align: center; /* Ensure the text is centered */
+        }
+
+        .sidebar {
+            width: 200px;  /* Decreased sidebar width */
+            background-color: #526D82;
+            height: calc(100vh - 2px);  /* Adjust height for the topbar */
+            position: fixed;
+            padding-top: 5px;
+            overflow: auto;
+            margin-top: 50px; /* Space for topbar */
+            top: 0px; /* Start below the topbar */
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 5px;
+        }
+
+        .sidebar li {
+            color: white;
+            padding: 10px;
+            position: relative; /* Ensure submenu is positioned correctly */
+        }
+
+        .sidebar li a {
+            color: white;
+            text-decoration: none;
+            display: flex; /* Use flexbox for better alignment */
+            justify-content: space-between; /* Space between text and icon */
+            align-items: center; /* Center align items vertically */
+        }
+
+        .sidebar li:hover {
+            background-color: #34495e;
+        }
+
+        .submenu {
+            display: none; /* Initially hide the submenu */
+            padding-left: 20px; /* Indent the submenu */
+            margin-left: 20px; /* Additional space to the left */
+            padding-top: 5px;
+        }
+
+        .submenu li {
+            padding: 5px 0; /* Space between submenu items */
+        }
+
+        .content {
+            margin-left: 200px; /* Space for sidebar */
+            margin-top: 50px; /* Space for topbar */
+            padding: 20px; /* Padding for content */
+            width: calc(100% - 200px); /* Adjust width to account for sidebar */
+            height: calc(100vh - 50px); /* Full height minus topbar */
+            overflow-y: auto; /* Allow vertical scrolling */
+            box-sizing: border-box; /* Include padding in width/height calculations */
+        }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <a href="https://aytech.co.in/" target="_blank">
+            <img src="{% static 'images/logo.png' %}" alt="Logo" style="height: 50px; margin-right: 10px;">
+        </a>         <!-- Image on the left -->
+        <h1>Accounting Web Application</h1> <!-- Centered text -->
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <ul>
+                <li>
+                    <a href="#" class="menu-toggle">Create </a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'invoice' %}">Invoice</a></li>
+                        <li><a href="{% url 'receipt' %}">Receipt</a></li>
+                    </ul>
+                </li>
+                <li><a href="#" class="menu-toggle">Expenses</a>
+                    <ul class="submenu">
+                        <li><a href="{% url 'view_expenses' %}">View</a></li>
+                        <li><a href="{% url 'add_expenses' %}">Add</a></li>
+                    </ul>
+                </li>
+                <li><a href="{% url 'accounts' %}">Accounts</a></li>
+                <li><a href="{% url 'manage' %}">Manage</a></li>
+                <li><a href="{% url 'profile' %}">Profile</a></li>
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            </ul>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            {% block content %}
+            <h1>Welcome to the Dashboard</h1>
+            {% endblock %}
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to toggle submenus
+        document.querySelectorAll('.menu-toggle').forEach(item => {
+            item.addEventListener('click', event => {
+                const submenu = item.nextElementSibling; // Get the submenu
+                if (submenu.style.display === 'block') {
+                    submenu.style.display = 'none'; // Hide if already visible
+                } else {
+                    submenu.style.display = 'block'; // Show if hidden
+                }
+                event.preventDefault(); // Prevent the default anchor click behavior
+            });
+        });
+    </script>
+</body>
+</html>

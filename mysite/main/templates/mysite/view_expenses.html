@@ -1,0 +1,102 @@
+<!-- templates/mysite/view_expenses.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>View Expenses</h1>
+
+    <form method="get" action="{% url 'view_expenses' %}">
+        <div>
+            <label for="month">Select Month:</label><br>
+            <select name="month" id="month">
+                {% for month_number, month_name in months %}
+                    <option value="{{ month_number }}" {% if month_number == selected_month %}selected{% endif %}>
+                        {{ month_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <label for="year">Select Year:</label><br>
+            <select name="year" id="year">
+                {% for year in years %}
+                    <option value="{{ year }}" {% if year == selected_year %}selected{% endif %}>
+                        {{ year }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+        
+        <div>
+            <button type="submit">Show Expenses</button>
+        </div>
+        
+        
+    </form>
+
+    <div>
+        <table style="width: 100%; border-collapse: collapse; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Party</th>
+                    <th>Particulars</th>
+                    <th>Invoice No.</th>
+                    <th>Amount</th>
+                    <th>Payment Method</th>
+                    <th>IGST</th>
+                    <th>CGST</th>
+                    <th>KGST</th>
+                    <th>TDS</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.date|date:"d-m-Y" }}</td>
+                        <td>{{ expense.party }}</td>
+                        <td>{{ expense.particulars }}</td>
+                        <td>{{ expense.invoice_number }}</td>
+                        <td>{{ expense.amount }}</td>
+                        <td>{{ expense.bank_or_cash }}</td>
+                        <td>{{ expense.igst }}</td>
+                        <td>{{ expense.cgst }}</td>
+                        <td>{{ expense.kgst }}</td>
+                        <td>{{ expense.tds }}</td>
+                        <td>{{ expense.total }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="11" style="text-align: center;">No expenses available.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <style>
+        table {
+            width: 100%; /* Full width of the container */
+            border-collapse: collapse; /* Merge borders */
+        }
+
+        th, td {
+            overflow: hidden; /* Prevent overflow */
+            text-overflow: ellipsis; /* Show ellipsis for overflow */
+            padding: 12px; /* Increased padding for better spacing */
+            border: 1px solid black; /* Border for each cell */
+            vertical-align: top; /* Align text to the top */
+            height: auto; /* Allow height to adjust automatically */
+            white-space: normal; /* Allow text to wrap */
+        }
+
+        thead {
+            background-color: #f2f2f2; /* Light background for the header */
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5; /* Highlight row on hover */
+        }
+    </style>
+{% endblock %}
