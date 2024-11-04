@@ -1,6 +1,7 @@
-# main/forms.py
 from django import forms
 from django.core.validators import DecimalValidator
+from django.forms.widgets import SelectDateWidget
+from .models import Expense
 
 class InvoiceForm(forms.Form):
     date = forms.DateField(
@@ -20,10 +21,6 @@ class InvoiceForm(forms.Form):
     gst_applicable = forms.ChoiceField(choices=[('yes', 'Yes'), ('no', 'No')])
 
 
-# main/forms.py
-from django import forms
-from django.core.validators import DecimalValidator
-
 class ReceiptForm(forms.Form):
     date = forms.DateField(
         widget=forms.DateInput(
@@ -35,8 +32,6 @@ class ReceiptForm(forms.Form):
     name = forms.CharField(max_length=100)
     batch = forms.CharField(max_length=50)
     course = forms.CharField(max_length=100)
-    
-    # Change description to a ChoiceField
     DESCRIPTION_CHOICES = [
         ('fees', 'Fees'),
     ]
@@ -44,11 +39,6 @@ class ReceiptForm(forms.Form):
     
     amount = forms.DecimalField(validators=[DecimalValidator(max_digits=10, decimal_places=2)])
     gst_applicable = forms.ChoiceField(choices=[('yes', 'Yes'), ('no', 'No')])
-
-# forms.py
-from django import forms
-from django.forms.widgets import SelectDateWidget
-from .models import Expense
 
 class ExpenseForm(forms.ModelForm):
     BANK_OR_CASH_CHOICES = [

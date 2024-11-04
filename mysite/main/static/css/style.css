@@ -1,5 +1,4 @@
 <style>
-    /* Basic CSS for layout */
     body {
         font-family: Arial, sans-serif;
         margin: 0;
@@ -7,9 +6,9 @@
     }
 
     .sidebar {
-        width: 200px;  /* Decreased sidebar width */
+        width: 200px;
         background-color: #526D82;
-        height: calc(100vh - 2px);;
+        height: calc(100vh - 2px);
         position: fixed;
         padding-top: 0px;
         overflow: auto;
@@ -24,7 +23,7 @@
     .sidebar li {
         color: white;
         padding: 10px;
-        position: relative; /* Ensure submenu is positioned correctly */
+        position: relative;
     }
 
     .sidebar li a {
@@ -35,10 +34,6 @@
     .sidebar li:hover {
         background-color: #34495e;
     }
-
-    /* .sidebar li:hover .submenu {
-        display: block; /* Show submenu on hover */
-    } */
 
     .submenu {
         display: none; /* Initially hide the submenu */
@@ -56,17 +51,14 @@
         padding: 20px;
         width: calc(100% - 200px); /* Adjusted content width */
     }
-    
-    /* Example CSS to ensure visibility */
+
     form div {
         display: block; /* Ensure each div is displayed */
         margin: 10px 0; /* Add some margin for spacing */
     }
 
-    /* If a class is hiding fields, remove the rule */
     .hidden {
-        display: none; /* Remove or comment this line if it's being used */
+        display: none; 
     }
 
 </style>
-

@@ -2,7 +2,7 @@ from django.urls import path
 from .views import home, invoice, receipt, view_expenses, add_expenses, accounts, manage, profile, logout, create_invoice,create_receipt
 
 urlpatterns = [
-    path('', home, name='dashboard'),  # This will render the dashboard
+    path('', home, name='dashboard'),
     path('invoice/', invoice, name='invoice'),
     path('receipt/', receipt, name='receipt'),
     path('view_expenses/', view_expenses, name='view_expenses'),

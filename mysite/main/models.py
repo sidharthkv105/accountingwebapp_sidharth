@@ -1,15 +1,8 @@
-# main/models.py
-# models.py
 from django.db import models
 from decimal import Decimal
 
 class DocumentCounter(models.Model):
     last_document_number = models.IntegerField(default=0)  # Common counter for both invoice and receipt
-
-
-
-
-from django.db import models
 
 class Expense(models.Model):
     date = models.DateField()

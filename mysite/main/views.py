@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from .forms import InvoiceForm
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from .forms import InvoiceForm, ReceiptForm
 from decimal import Decimal
+import os
+from .models import DocumentCounter
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader
 
 def home(request):
     return render(request, 'dashboard.html')
@@ -28,33 +36,6 @@ def profile(request):
 
 def logout(request):
     return render(request, 'logout.html')
-
-
-# main/views.py
-from django.shortcuts import render
-from django.http import HttpResponse
-from .forms import InvoiceForm
-from decimal import Decimal
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-import io
-
-from django.http import HttpResponse
-from django.template.loader import get_template
-from django.shortcuts import render, redirect
-from .forms import InvoiceForm, ReceiptForm
-from .models import DocumentCounter
-from io import BytesIO
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import A4
-from reportlab.lib import colors
-
-# Helper to generate PDF
-from io import BytesIO
-from reportlab.lib.pagesizes import A4
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.utils import ImageReader
 
 def generate_pdf(invoice_data):
     buffer = BytesIO()
@@ -109,7 +90,6 @@ def generate_pdf(invoice_data):
     buffer.seek(0)
     return buffer
 
-
 def create_invoice(request):
     if request.method == 'POST':
         form = InvoiceForm(request.POST)
@@ -140,20 +120,6 @@ def create_invoice(request):
         form = InvoiceForm()
 
     return render(request, 'mysite/invoice.html', {'form': form})
-
-
-from io import BytesIO
-from django.http import HttpResponse
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from decimal import Decimal
-
-from io import BytesIO
-from reportlab.lib.pagesizes import letter
-from reportlab.pdfgen import canvas
-from reportlab.lib.units import inch
-from reportlab.lib.utils import ImageReader
-import os
 
 def generate_receipt_pdf(receipt_data):
     # Create a buffer to hold the PDF
@@ -222,8 +188,6 @@ def generate_receipt_pdf(receipt_data):
     
     return pdf_value
 
-
-
 def create_receipt(request):
     if request.method == 'POST':
         form = ReceiptForm(request.POST)
@@ -254,7 +218,6 @@ def create_receipt(request):
 
     return render(request, 'mysite/receipt.html', {'form': form})
 
-
 def generate_document_number():
     counter = DocumentCounter.objects.first()
     if not counter:
@@ -265,13 +228,16 @@ def generate_document_number():
     counter.last_document_number = new_number
     counter.save()
 
-    return f"aytech_ir{new_number:03d}"  # Format: aytech_ir009, aytech_ir010, etc.
+    return f"aytech_ir{new_number:03d}"  # Format: aytech_ir009
+
+
 
 
 from django.shortcuts import render, redirect
 from .models import Expense
 from .forms import ExpenseForm
-
+from datetime import datetime
+import calendar
 
 def add_expenses(request):
     if request.method == 'POST':
@@ -283,12 +249,6 @@ def add_expenses(request):
         form = ExpenseForm()
     
     return render(request, 'mysite/add_expenses.html', {'form': form})
-
-
-from django.shortcuts import render
-from .models import Expense
-from datetime import datetime
-import calendar
 
 def view_expenses(request):
     # Get the current month and year
@@ -317,7 +277,3 @@ def view_expenses(request):
     }
 
     return render(request, 'mysite/view_expenses.html', context)
-
-
-
-# Inside your view function
