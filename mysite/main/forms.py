@@ -40,6 +40,9 @@ class ReceiptForm(forms.Form):
     amount = forms.DecimalField(validators=[DecimalValidator(max_digits=10, decimal_places=2)])
     gst_applicable = forms.ChoiceField(choices=[('yes', 'Yes'), ('no', 'No')])
 
+from django import forms
+from .models import Expense
+
 class ExpenseForm(forms.ModelForm):
     BANK_OR_CASH_CHOICES = [
         ('bank', 'Bank'),
@@ -50,11 +53,12 @@ class ExpenseForm(forms.ModelForm):
 
     class Meta:
         model = Expense
-        fields = ['date', 'party', 'particulars', 'invoice_number', 'amount', 'bank_or_cash', 'igst', 'cgst', 'kgst', 'tds', 'total']
+        fields = ['date', 'party', 'particulars', 'invoice_number', 'amount', 'bank_or_cash', 'igst', 'cgst', 'kgst', 'tds']
         widgets = {
             'date': forms.DateInput(
                 attrs={
                     'type': 'date',
                     'class': 'form-control'  # Optional: Add CSS class for styling
                 }
-            ) }
+            )
+        }

@@ -42,7 +42,7 @@ def generate_pdf(invoice_data):
     p = canvas.Canvas(buffer, pagesize=A4)
 
     # Logo image (top right)
-    logo_path = r'C:\Users\sidha\Desktop\aytech\aytech_project\mysite\main\static\images\logo.png'
+    logo_path = "{% static 'images/logo.png' %}"
     logo = ImageReader(logo_path)
     p.drawImage(logo, 450, 750, width=1.5*inch, height=1.5*inch)
 
@@ -129,7 +129,7 @@ def generate_receipt_pdf(receipt_data):
     p = canvas.Canvas(buffer, pagesize=A4)
 
     # Logo image (top right)
-    logo_path = r'C:\Users\sidha\Desktop\aytech\aytech_project\mysite\main\static\images\logo.png'
+    logo_path = "{% static 'images/logo.png' %}"
     if os.path.exists(logo_path):
         logo = ImageReader(logo_path)
         p.drawImage(logo, 450, 750, width=1.5*inch, height=1.5*inch)
@@ -238,6 +238,9 @@ from .models import Expense
 from .forms import ExpenseForm
 from datetime import datetime
 import calendar
+
+from django.shortcuts import render, redirect
+from .forms import ExpenseForm
 
 def add_expenses(request):
     if request.method == 'POST':
