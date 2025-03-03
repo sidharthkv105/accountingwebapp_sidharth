@@ -44,21 +44,12 @@ from django import forms
 from .models import Expense
 
 class ExpenseForm(forms.ModelForm):
-    BANK_OR_CASH_CHOICES = [
-        ('bank', 'Bank'),
-        ('cash', 'Cash'),
-    ]
-    
-    bank_or_cash = forms.ChoiceField(choices=BANK_OR_CASH_CHOICES, label="Payment Method")
-
     class Meta:
         model = Expense
-        fields = ['date', 'party', 'particulars', 'invoice_number', 'amount', 'bank_or_cash', 'igst', 'cgst', 'kgst', 'tds']
+        fields = ['date', 'party', 'particulars', 'invoice_number', 'amount', 'bank_or_cash']
         widgets = {
-            'date': forms.DateInput(
-                attrs={
-                    'type': 'date',
-                    'class': 'form-control'  # Optional: Add CSS class for styling
-                }
-            )
+            'date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+
+        

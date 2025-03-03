@@ -9,7 +9,7 @@
         
         <div>
             {{ form.date.label_tag }}<br>
-            {{ form.date }}  <!-- This will render the SelectDateWidget -->
+            {{ form.date }}  <!-- This will render the DateInput -->
         </div>
         <div>
             {{ form.party.label_tag }}<br>
@@ -32,20 +32,20 @@
             {{ form.bank_or_cash }}  <!-- This will render the ChoiceField -->
         </div>        
         <div>
-            {{ form.igst.label_tag }}<br>
-            {{ form.igst }}
+            {{ form.igst_percentage.label_tag }}<br>
+            {{ form.igst_percentage }}  <!-- Updated to reflect percentage field -->
         </div>
         <div>
-            {{ form.cgst.label_tag }}<br>
-            {{ form.cgst }}
+            {{ form.cgst_percentage.label_tag }}<br>
+            {{ form.cgst_percentage }}  <!-- Updated to reflect percentage field -->
         </div>
         <div>
-            {{ form.kgst.label_tag }}<br>
-            {{ form.kgst }}
+            {{ form.kgst_percentage.label_tag }}<br>
+            {{ form.kgst_percentage }}  <!-- Updated to reflect percentage field -->
         </div>
         <div>
-            {{ form.tds.label_tag }}<br>
-            {{ form.tds }}
+            {{ form.tds_percentage.label_tag }}<br>
+            {{ form.tds_percentage }}  <!-- Updated to reflect percentage field -->
         </div>
         
         <button type="submit">Add Expense</button>

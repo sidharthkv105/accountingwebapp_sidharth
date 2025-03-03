@@ -238,20 +238,45 @@ from .models import Expense
 from .forms import ExpenseForm
 from datetime import datetime
 import calendar
-
+from decimal import Decimal, InvalidOperation
 from django.shortcuts import render, redirect
 from .forms import ExpenseForm
+
+IGST_RATE = Decimal('0.18')  # IGST as Decimal
+CGST_RATE = Decimal('0.0009')  # CGST as Decimal
+KGST_RATE = Decimal('0.0009')  # KGST as Decimal
+TDS_RATE = Decimal('0.10')   # TDS as Decimal
 
 def add_expenses(request):
     if request.method == 'POST':
         form = ExpenseForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('view_expenses')  # Redirect to view expenses
+            try:
+                
+                amount = form.cleaned_data['amount']
+                if not isinstance(amount, Decimal):
+                    amount = Decimal(str(amount))  
+                
+                igst_amount = amount * IGST_RATE
+                cgst_amount = amount * CGST_RATE
+                kgst_amount = amount * KGST_RATE
+                tds_amount = amount * TDS_RATE
+                total = amount + igst_amount + cgst_amount + kgst_amount - tds_amount
+                expense = form.save(commit=False)
+                expense.igst = igst_amount
+                expense.cgst = cgst_amount
+                expense.kgst = kgst_amount
+                expense.tds = tds_amount
+                expense.total = total 
+                expense.save()
+                return redirect('view_expenses')
+            
+            except InvalidOperation:
+                form.add_error('amount', 'Invalid amount entered. Please check your inputs.')
     else:
         form = ExpenseForm()
-    
     return render(request, 'mysite/add_expenses.html', {'form': form})
+
 
 def view_expenses(request):
     # Get the current month and year
