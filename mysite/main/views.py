@@ -9,6 +9,8 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import inch
 from reportlab.lib.utils import ImageReader
+from django.conf import settings
+
 
 def home(request):
     return render(request, 'dashboard.html')
@@ -18,9 +20,6 @@ def invoice(request):
 
 def receipt(request):
     return render(request, 'receipt.html')
-
-def view_expenses(request):
-    return render(request, 'view_expenses.html')
 
 def add_expense(request):
     return render(request, 'add_expense.html')
@@ -42,8 +41,13 @@ def generate_pdf(invoice_data):
     p = canvas.Canvas(buffer, pagesize=A4)
 
     # Logo image (top right)
-    logo_path = "{% static 'images/logo.png' %}"
-    logo = ImageReader(logo_path)
+    logo_path = os.path.join(settings.BASE_DIR, 'main', 'static', 'images', 'logo.png')
+    if os.path.exists(logo_path):
+        logo = ImageReader(logo_path)
+        p.drawImage(logo, 450, 750, width=1.5*inch, height=1.5*inch)
+    else:
+        print(f"Error: Logo file not found")
+
     p.drawImage(logo, 450, 750, width=1.5*inch, height=1.5*inch)
 
     # Main heading (AY TECH) with larger font size
@@ -129,12 +133,12 @@ def generate_receipt_pdf(receipt_data):
     p = canvas.Canvas(buffer, pagesize=A4)
 
     # Logo image (top right)
-    logo_path = "{% static 'images/logo.png' %}"
+    logo_path = os.path.join(settings.BASE_DIR, 'main', 'static', 'images', 'logo.png')
     if os.path.exists(logo_path):
         logo = ImageReader(logo_path)
         p.drawImage(logo, 450, 750, width=1.5*inch, height=1.5*inch)
     else:
-        print(f"Error: Logo file not found at {logo_path}")
+        print(f"Error: Logo file not found")
 
     # Main heading (AY TECH) with larger font size
     p.setFont("Helvetica-Bold", 20)

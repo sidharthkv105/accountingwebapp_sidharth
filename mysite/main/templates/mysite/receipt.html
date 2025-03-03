@@ -28,6 +28,9 @@
         <div>
             {{ form.amount.label_tag }}<span style="color: red;">*</span><br>
             {{ form.amount }}
+            {% if form.amount.errors %}
+                <div class="error" style="color:red;">{{ form.amount.errors.0 }}</div>
+            {% endif %}
         </div>
         <div>
             {{ form.gst_applicable.label_tag }}<span style="color: red;">*</span><br>
